@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debt to Penny</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            background-color: #007bff;
+            color: white;
+            margin: 0;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .pagination a {
+            margin: 0 5px;
+            padding: 10px 15px;
+            text-decoration: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .pagination a.disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .pagination a:hover:not(.disabled) {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Debt to Penny (Year and Month)</h1>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Year</th>
+                    <th>Month</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for debt in debts %}
+                <tr>
+                    <td>{{ debt.record_calendar_year }}</td>
+                    <td>{{ debt.record_calendar_month }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            {% if page_number > 1 %}
+            <a href="?page_number={{ page_number - 1 }}&page_size={{ page_size }}">Previous</a>
+            {% else %}
+            <a class="disabled">Previous</a>
+            {% endif %}
+            <span>Page {{ page_number }}</span>
+            {% if meta.total_count > page_number * page_size %}
+            <a href="?page_number={{ page_number + 1 }}&page_size={{ page_size }}">Next</a>
+            {% else %}
+            <a class="disabled">Next</a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

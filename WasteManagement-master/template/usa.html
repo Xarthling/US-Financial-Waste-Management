@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US Agencies</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Top-Tier Agencies</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Agency ID</th>
+                <th>Top-Tier Code</th>
+                <th>Abbreviation</th>
+                <th>Agency Name</th>
+                <th>Congressional Justification URL</th>
+                <th>Active Fiscal Year</th>
+                <th>Active Fiscal Quarter</th>
+                <th>Outlay Amount</th>
+                <th>Obligated Amount</th>
+                <th>Budget Authority Amount</th>
+                <th>Total Budget Authority</th>
+                <th>Percentage of Budget Authority</th>
+                <th>Agency Slug</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for agency in agencies %}
+            <tr>
+                <td>{{ agency.agency_id }}</td>
+                <td>{{ agency.toptier_code }}</td>
+                <td>{{ agency.abbreviation }}</td>
+                <td>{{ agency.agency_name }}</td>
+                <td>
+                    {% if agency.congressional_justification_url %}
+                        <a href="{{ agency.congressional_justification_url }}" target="_blank">Link</a>
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td>{{ agency.active_fy }}</td>
+                <td>{{ agency.active_fq }}</td>
+                <td>${{ agency.outlay_amount | round(2) }}</td>
+                <td>${{ agency.obligated_amount | round(2) }}</td>
+                <td>${{ agency.budget_authority_amount | round(2) }}</td>
+                <td>${{ agency.current_total_budget_authority_amount | round(2) }}</td>
+                <td>{{ agency.percentage_of_total_budget_authority | round(6) }}</td>
+                <td>{{ agency.agency_slug }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
